@@ -1,0 +1,90 @@
+{
+"provisioners": [
+  {
+    "type": "file",
+    "source": "core/",
+    "destination": "/var/www/mediawiki",
+    "order": "11"
+  },
+  {
+    "type": "file",
+    "source": "extensions/",
+    "destination": "/var/www/mediawiki/extensions",
+    "order": "12"
+  },
+  {
+    "type": "shell",
+    "inline": [
+        "mkdir /var/www/mediawiki/vendor",
+        "mkdir /var/www/mediawiki/skins/logos",
+        "mkdir /var/www/mediawiki/skins/common/fonts"
+     ],
+    "order": "13"
+  },
+  {
+    "type": "file",
+    "source": "vendor/",
+    "destination": "/var/www/mediawiki/vendor",
+    "order": "14"
+  },
+  {
+    "type": "file",
+    "source": "nubis/bin/LocalSettings.php",
+    "destination": "/var/www/mediawiki/LocalSettings.php",
+    "order": "15"
+  },
+  {
+    "type": "file",
+    "source": "assets/fonts/",
+    "destination": "/var/www/mediawiki/skins/common/fonts",
+    "order": "16"
+  },
+  {
+    "type": "file",
+    "source": "assets/logos/",
+    "destination": "/var/www/mediawiki/skins/logos",
+    "order": "18"
+  },
+  {
+    "type": "shell",
+    "inline": [
+        "sudo mkdir /var/www/images",
+        "sudo chown www-data:www-data /var/www/images",
+        "sudo rm -rf /var/www/mediawiki/images",
+        "sudo ln -s /var/www/images /var/www/mediawiki/"
+    ],
+    "order": "19"
+  },
+  {
+    "type": "shell",
+    "inline": [
+        "sudo mkdir /var/www/charts",
+        "sudo chown www-data:www-data /var/www/charts",
+        "sudo ln -s /var/www/charts /var/www/mediawiki/extensions/Bugzilla/charts"
+    ],
+    "order": "20"
+  },
+  {
+    "type": "shell",
+    "inline": [
+        "sudo chown www-data:www-data /var/www/mediawiki"
+    ],
+    "order": "21"
+  },
+  {
+    "type": "file",
+    "source": "nubis/bin/migrate.sh",
+    "destination": "/tmp/migrate.sh",
+    "order": "22"
+  },
+  {
+    "type": "shell",
+    "inline": [
+        "sudo mv /tmp/migrate.sh /etc/nubis.d/migrate",
+        "sudo chown root:root /etc/nubis.d/migrate",
+        "sudo chmod 755 /etc/nubis.d/migrate"
+    ],
+    "order": "23"
+  }
+]
+}

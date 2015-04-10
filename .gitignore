@@ -15,3 +15,6 @@ secrets.php
 # these assest are not in version control
 images
 php_sessions
+
+# Dont want secrets checked in
+nubis/cloudformation/parameters.json

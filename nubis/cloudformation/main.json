@@ -222,7 +222,7 @@
             ]
           },
           "AllocatedStorage": "15",
-          "DBInstanceClass": "db.t1.micro",
+          "DBInstanceClass": "db.m3.large",
           "DBName": "mediawiki",
           "EC2SecurityGroup": {
             "Fn::GetAtt": [

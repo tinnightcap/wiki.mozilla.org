@@ -13,22 +13,20 @@ class {
         default_vhost       => false,
         default_confd_files => false,
         mpm_module          => 'prefork';
-    'apache::mod::php':
-}
-
-class {
-    '::apache::mod::rpaf':
-    $proxy_ips   = [ '127.0.0.1', '10.166.240.0/24', '10.166.242.0/24', '10.166.244.0/24' ]
+    'apache::mod::php':;
+    'apache::mod::remoteip':
+        proxy_ips => [ '127.0.0.1', '10.0.0.0/8' ];
 }
 
 apache::vhost { $::vhost_name:
-    port            => '8080',
-    default_vhost   => true,
-    docroot         => $::install_root,
-    docroot_owner   => 'ubuntu',
-    docroot_group   => 'ubuntu',
-    block           => ['scm'],
-    custom_fragment => 'AddType image/svg+xml .svg',
+    port              => '8080',
+    default_vhost     => true,
+    docroot           => $::install_root,
+    docroot_owner     => 'ubuntu',
+    docroot_group     => 'ubuntu',
+    block             => ['scm'],
+    access_log_format => '%a %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-agent}i\"',
+    custom_fragment   => 'AddType image/svg+xml .svg',
     directories => [
         { path            => '%{DOCUMENT_ROOT}',
           provider        => 'directory',

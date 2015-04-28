@@ -2,8 +2,8 @@
   "AWSTemplateFormatVersion": "2010-09-09",
   "Description": "Demo Mediawiki deployment for the nubis project.",
   "Parameters": {
-    "ProjectName": {
-      "Description": "Name of this deployment",
+    "ServiceName": {
+      "Description": "Name of the service",
       "Type": "String"
     },
     "Environment": {
@@ -16,24 +16,6 @@
         "sandbox"
       ],
       "ConstraintDescription": "Must specify prod, dev, or sandbox."
-    },
-    "ConsulSecret": {
-      "Description": "Key to connect to Consul with",
-      "Type": "String",
-      "NoEcho": "true"
-    },
-    "ConsulEndpoint": {
-      "Description": "Consul endpoint to connect to.",
-      "Default": "us-west-2.consul.sandbox.nubis.allizom.org",
-      "Type": "String",
-      "AllowedValues": [
-        "us-west-2.consul.sandbox.nubis.allizom.org",
-        "us-east-1.consul.sandbox.nubis.allizom.org"
-      ]
-    },
-    "Region": {
-      "Description": "Region to deploy stack into",
-      "Type": "String"
     },
     "BaseZone": {
       "Description": "Base zone to create route53 zone in",
@@ -56,28 +38,6 @@
       "Description": "A Google analytics key",
       "Type": "String"
     },
-    "SslKey": {
-      "Description": "Consul SSL key",
-      "Type": "String",
-      "NoEcho": "true"
-    },
-    "SslCert": {
-      "Description": "Consul SSL cert",
-      "Type": "String",
-      "NoEcho": "true"
-    },
-    "VpcId": {
-      "Description": "Id of the VPC",
-      "Type": "String"
-    },
-    "Subnets": {
-      "Description": "Coma, seperated, list, of, subnets",
-      "Type": "CommaDelimitedList"
-    },
-    "ELBSubnets": {
-      "Description": "ELBs live in their own coma, seperated, list, of, subnets",
-      "Type": "CommaDelimitedList"
-    },
     "TechnicalOwner": {
       "Description": "A valid LDAP email",
       "Type": "String"
@@ -85,6 +45,21 @@
     "AmiId": {
       "Description": "The id of the ami for this region",
       "Type": "String"
+    },
+    "StorageClusterSize": {
+      "Description": "The number of nodes in the storage cluster",
+      "Type": "String",
+      "Default": "3"
+    },
+    "StorageVolumeSize": {
+      "Description": "The storage size (in GB) of each member of the storage cluster",
+      "Type": "String",
+      "Default": "16"
+    },
+    "StorageInstanceType": {
+      "Description": "The instance type of each member of the storage cluster",
+      "Type": "String",
+      "Default": "m3.medium"
     }
   },
   "Mappings": {
@@ -108,7 +83,7 @@
         "TimeoutInMinutes": "60",
         "Parameters": {
           "ServiceName": {
-            "Ref": "AWS::StackName"
+            "Ref": "ServiceName"
           },
           "TechnicalOwner": {
             "Ref": "TechnicalOwner"
@@ -116,37 +91,11 @@
           "Environment": {
             "Ref": "Environment"
           },
-          "VpcId": {
-            "Ref": "VpcId"
-          },
-          "Subnets": {
-            "Fn::Join": [
-              ",",
-              {
-                "Ref": "Subnets"
-              }
-            ]
-          },
           "AmiId": {
             "Ref": "AmiId"
           },
           "KeyName": {
             "Ref": "KeyName"
-          },
-          "ProjectName": {
-            "Ref": "ProjectName"
-          },
-          "ConsulEndpoint": {
-            "Ref": "ConsulEndpoint"
-          },
-          "ConsulSecret": {
-            "Ref": "ConsulSecret"
-          },
-          "SslKey": {
-            "Ref": "SslKey"
-          },
-          "SslCert": {
-            "Ref": "SslCert"
           },
           "InstanceType": {
             "Fn::FindInMap": [
@@ -173,24 +122,13 @@
         "TimeoutInMinutes": "60",
         "Parameters": {
           "ServiceName": {
-            "Ref": "AWS::StackName"
+            "Ref": "ServiceName"
           },
           "TechnicalOwner": {
             "Ref": "TechnicalOwner"
           },
           "Environment": {
             "Ref": "Environment"
-          },
-          "VpcId": {
-            "Ref": "VpcId"
-          },
-          "Subnets": {
-            "Fn::Join": [
-              ",",
-              {
-                "Ref": "ELBSubnets"
-              }
-            ]
           }
         }
       }
@@ -202,24 +140,13 @@
         "TimeoutInMinutes": "60",
         "Parameters": {
           "ServiceName": {
-            "Ref": "AWS::StackName"
+            "Ref": "ServiceName"
           },
           "TechnicalOwner": {
             "Ref": "TechnicalOwner"
           },
           "Environment": {
             "Ref": "Environment"
-          },
-          "VpcId": {
-            "Ref": "VpcId"
-          },
-          "Subnets": {
-            "Fn::Join": [
-              ",",
-              {
-                "Ref": "Subnets"
-              }
-            ]
           },
           "AllocatedStorage": "15",
           "DBInstanceClass": "db.m3.large",
@@ -240,24 +167,13 @@
         "TimeoutInMinutes": "60",
         "Parameters": {
           "ServiceName": {
-            "Ref": "AWS::StackName"
+            "Ref": "ServiceName"
           },
           "TechnicalOwner": {
             "Ref": "TechnicalOwner"
           },
           "Environment": {
             "Ref": "Environment"
-          },
-          "VpcId": {
-            "Ref": "VpcId"
-          },
-          "Subnets": {
-            "Fn::Join": [
-              ",",
-              {
-                "Ref": "Subnets"
-              }
-            ]
           },
           "EC2SecurityGroup": {
             "Fn::GetAtt": [
@@ -275,27 +191,10 @@
         "TimeoutInMinutes": "60",
         "Parameters": {
           "ServiceName": {
-            "Ref": "AWS::StackName"
-          },
-          "TechnicalOwner": {
-            "Ref": "TechnicalOwner"
+            "Ref": "ServiceName"
           },
           "Environment": {
             "Ref": "Environment"
-          },
-          "VpcId": {
-            "Ref": "VpcId"
-          },
-          "Subnets": {
-            "Fn::Join": [
-              ",",
-              {
-                "Ref": "ELBSubnets"
-              }
-            ]
-          },
-          "ProjectName": {
-            "Ref": "ProjectName"
           },
           "BaseZone": {
             "Ref": "BaseZone"
@@ -304,6 +203,42 @@
             "Fn::GetAtt": [
               "ELBStack",
               "Outputs.DNSName"
+            ]
+          }
+        }
+      }
+    },
+    "StorageStack": {
+      "Type": "AWS::CloudFormation::Stack",
+      "Properties": {
+        "TemplateURL": "https://s3.amazonaws.com/nubisproject-stacks/master/storage.template",
+        "TimeoutInMinutes": "60",
+        "Parameters": {
+          "ServiceName": {
+            "Ref": "ServiceName"
+          },
+          "TechnicalOwner": {
+            "Ref": "TechnicalOwner"
+          },
+          "Environment": {
+            "Ref": "Environment"
+          },
+          "KeyName": {
+            "Ref": "KeyName"
+          },
+          "InstanceType": {
+            "Ref": "StorageInstanceType"
+          },
+          "ClusterSize": {
+            "Ref": "StorageClusterSize"
+          },
+          "VolumeSize": {
+            "Ref": "StorageVolumeSize"
+          },
+          "EC2SecurityGroup": {
+            "Fn::GetAtt": [
+              "EC2Stack",
+              "Outputs.GroupId"
             ]
           }
         }
@@ -334,7 +269,7 @@
           [
             "http://www",
             {
-              "Ref": "ProjectName"
+              "Ref": "ServiceName"
             },
             {
               "Ref": "Environment"

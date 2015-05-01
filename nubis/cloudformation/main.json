@@ -46,20 +46,10 @@
       "Description": "The id of the ami for this region",
       "Type": "String"
     },
-    "StorageClusterSize": {
-      "Description": "The number of nodes in the storage cluster",
-      "Type": "String",
-      "Default": "3"
-    },
     "StorageVolumeSize": {
       "Description": "The storage size (in GB) of each member of the storage cluster",
       "Type": "String",
       "Default": "30"
-    },
-    "StorageInstanceType": {
-      "Description": "The instance type of each member of the storage cluster",
-      "Type": "String",
-      "Default": "m3.medium"
     }
   },
   "Mappings": {
@@ -226,12 +216,6 @@
           },
           "KeyName": {
             "Ref": "KeyName"
-          },
-          "InstanceType": {
-            "Ref": "StorageInstanceType"
-          },
-          "ClusterSize": {
-            "Ref": "StorageClusterSize"
           },
           "VolumeSize": {
             "Ref": "StorageVolumeSize"

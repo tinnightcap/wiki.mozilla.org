@@ -142,3 +142,29 @@ if [ $RV != 0 ]; then
     $LOGGER "ERROR: Error running database migrations ($RV), aborting."
     exit $RV
 fi
+
+# Check to see if /data is mounted
+#+ Create directories if they do not exist
+while [ ${DONE:-0} -lt '60' ]; do
+    MOUNT_TEST=`mountpoint -q /data/wiki.mozilla.org/`
+    MOUNT_UP=$?
+    if [ $MOUNT_UP == 0 ]; then
+        if [ ! -d '/data/wiki.mozilla.org/tmp' ]; then
+            mkdir '/data/wiki.mozilla.org/tmp'
+            chown ubuntu:ubuntu '/data/wiki.mozilla.org/tmp'
+        fi
+        if [ ! -d '/data/wiki.mozilla.org/images' ]; then
+            mkdir '/data/wiki.mozilla.org/images'
+            chown www-data:www-data '/data/wiki.mozilla.org/images'
+        fi
+        if [ ! -d '/data/wiki.mozilla.org/charts' ]; then
+            mkdir '/data/wiki.mozilla.org/charts'
+            chown www-data:www-data '/data/wiki.mozilla.org/charts'
+        fi
+        DONE=255
+    else
+        echo "Waiting for mount point (sleep 10)"
+        sleep 10
+        let DONE=$DONE+1
+    fi
+done

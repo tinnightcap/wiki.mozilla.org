@@ -25,6 +25,7 @@ apache::vhost { $::vhost_name:
     docroot_owner     => 'ubuntu',
     docroot_group     => 'ubuntu',
     block             => ['scm'],
+    setenvif          => 'X_FORWARDED_PROTO https HTTPS=on',
     access_log_format => '%a %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-agent}i\"',
     custom_fragment   => 'AddType image/svg+xml .svg',
     directories => [
@@ -39,6 +40,12 @@ apache::vhost { $::vhost_name:
         },
     ],
     rewrites => [
+        {
+            comment      => 'Rewrite all non-ssl traffic to https',
+            rewrite_cond => ['!no-ssl-rewrite'],
+            rewrite_cond => ['%{HTTPS} !=on'],
+            rewrite_rule => ['^/?(.*) https://%{SERVER_NAME}/$1 [R,L]'],
+        },
         {
             comment      => 'Rewrite the old UseMod URLs to the new MediaWiki ones',
             rewrite_rule => ['^/AdminWiki(/.*|$) https://intranet.mozilla.org/%{QUERY_STRING} [R=permanent,L]',

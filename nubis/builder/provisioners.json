@@ -48,19 +48,15 @@
   {
     "type": "shell",
     "inline": [
-        "sudo mkdir /var/www/images",
-        "sudo chown www-data:www-data /var/www/images",
         "sudo rm -rf /var/www/mediawiki/images",
-        "sudo ln -s /var/www/images /var/www/mediawiki/"
+        "sudo ln -s /data/wiki.mozilla.org/images /var/www/mediawiki/"
     ],
     "order": "19"
   },
   {
     "type": "shell",
     "inline": [
-        "sudo mkdir /var/www/charts",
-        "sudo chown www-data:www-data /var/www/charts",
-        "sudo ln -s /var/www/charts /var/www/mediawiki/extensions/Bugzilla/charts"
+        "sudo ln -s /data/wiki.mozilla.org/charts /var/www/mediawiki/extensions/Bugzilla/charts"
     ],
     "order": "20"
   },

@@ -1,4 +1,6 @@
 # Setup a local varnish instance for caching
+#
+# https://github.com/maxchk/puppet-varnish
 
 class {'varnish':
   varnish_listen_port	=> 80,
@@ -14,7 +16,8 @@ class { 'varnish::vcl':
 }
 
 varnish::probe {  'mediawiki_version': 
-  url => '/Special%3AVersion'
+  url => '/Special%3AVersion%3Fno-ssl-rewrite',
+  timeout => '15s',
 }
 
 varnish::backend { 'default': 

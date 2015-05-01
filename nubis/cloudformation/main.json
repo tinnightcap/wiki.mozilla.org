@@ -54,7 +54,7 @@
     "StorageVolumeSize": {
       "Description": "The storage size (in GB) of each member of the storage cluster",
       "Type": "String",
-      "Default": "16"
+      "Default": "30"
     },
     "StorageInstanceType": {
       "Description": "The instance type of each member of the storage cluster",
@@ -129,7 +129,8 @@
           },
           "Environment": {
             "Ref": "Environment"
-          }
+          },
+          "ElbHealthTarget": "HTTP:80/Special%3AVersion"
         }
       }
     },
@@ -267,7 +268,7 @@
         "Fn::Join": [
           ".",
           [
-            "http://www",
+            "//www",
             {
               "Ref": "ServiceName"
             },

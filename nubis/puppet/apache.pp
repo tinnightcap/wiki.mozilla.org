@@ -42,8 +42,9 @@ apache::vhost { $::vhost_name:
     rewrites => [
         {
             comment      => 'Rewrite all non-ssl traffic to https',
-            rewrite_cond => ['!no-ssl-rewrite'],
-            rewrite_cond => ['%{HTTPS} !=on'],
+            rewrite_cond => ['%{QUERY_STRING} !no-ssl-rewrite',
+                             '%{HTTP:X-Forwarded-Proto} !https'
+                            ],
             rewrite_rule => ['^/?(.*) https://%{SERVER_NAME}/$1 [R,L]'],
         },
         {

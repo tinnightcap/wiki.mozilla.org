@@ -13,10 +13,11 @@ class {'varnish::ncsa': }
 
 class { 'varnish::vcl': 
   backends => {}, # without this line you will not be able to redefine backend 'default'
+  cookiekeeps => [ 'mediawiki[^=]*' ]
 }
 
 varnish::probe {  'mediawiki_version': 
-  url => '/Special%3AVersion%3Fno-ssl-rewrite',
+  url => '/Special%3AVersion?no-ssl-rewrite',
   timeout => '15s',
 }
 

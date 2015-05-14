@@ -13,7 +13,12 @@ class {'varnish::ncsa': }
 
 class { 'varnish::vcl': 
   backends => {}, # without this line you will not be able to redefine backend 'default'
-  cookiekeeps => [ 'mediawiki[^=]*' ]
+  cookiekeeps => [ 'mediawiki[^=]*' ],
+  logrealip => true,
+  honor_backend_ttl => true,
+  cond_requests => true,
+  https_redirect => true,
+  x_forwarded_proto => true,
 }
 
 varnish::probe {  'mediawiki_version': 

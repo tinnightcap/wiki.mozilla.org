@@ -25,7 +25,7 @@ apache::vhost { $::vhost_name:
     docroot_owner     => 'ubuntu',
     docroot_group     => 'ubuntu',
     block             => ['scm'],
-    setenvif          => 'X_FORWARDED_PROTO https HTTPS=on',
+    setenvif          => 'X-Forwarded-Proto https HTTPS=on',
     access_log_format => '%a %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-agent}i\"',
     custom_fragment   => 'AddType image/svg+xml .svg',
     directories => [

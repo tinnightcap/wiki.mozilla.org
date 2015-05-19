@@ -79,8 +79,8 @@ echo " + wgUpgradeKey=$wgUpgradeKey"
 KEYS_UP=-1
 COUNT=0
 while [ "$KEYS_UP" != "0" ]; do
-    # Try for 20 minutes (30 seconds * 40 attempts = 1200 seconds / 60 seconds = 20 minutes)
-    if [ ${COUNT} == "40" ]; then
+    # Try for 20 minutes (30 seconds * 20160 attempts = 604800 seconds / 60 seconds / 60 minutes / 12 hours = 7 days)
+    if [ ${COUNT} == "20160" ]; then
         $LOGGER "ERROR: Timeout while waiting for keys to be populated in consul."
         exit 1
     fi

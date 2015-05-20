@@ -34,3 +34,8 @@ package { 'makepasswd':
   ensure => '1.10-9',
   require  => Exec['apt-get update'],
 }
+
+package { 'git':
+  ensure => 'latest',
+  require  => Exec['apt-get update'],
+}

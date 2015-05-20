@@ -23,8 +23,20 @@
   },
   {
     "type": "file",
-    "source": "vendor/",
-    "destination": "/var/www/mediawiki/vendor",
+    "source": "tools/composer.phar",
+    "destination": "/tmp/composer.phar",
+    "order": "14"
+  },
+  {
+    "type": "file",
+    "source": "composer.json",
+    "destination": "/var/www/mediawiki/composer.json",
+    "order": "14"
+  },
+  {
+    "type": "file",
+    "source": "composer.lock",
+    "destination": "/var/www/mediawiki/composer.lock",
     "order": "14"
   },
   {
@@ -63,7 +75,8 @@
   {
     "type": "shell",
     "inline": [
-        "sudo chown www-data:www-data /var/www/mediawiki"
+        "sudo chown www-data:www-data /var/www/mediawiki",
+        "sudo php /tmp/composer.phar install --working-dir /var/www/mediawiki"
     ],
     "order": "21"
   },

@@ -91,7 +91,7 @@ update-consul () {
 
             KEY=$(jq --monochrome-output --raw-output ".[0][$COUNT] | .OutputKey" $IO_FILE)
             VALUE=$(jq --monochrome-output --raw-output ".[0][$COUNT] | .OutputValue" $IO_FILE)
-            echo "$VALUE ${CONSUL_PATH}${KEY}"
+            echo -n "$VALUE ${CONSUL_PATH}${KEY} "
             curl -s -X PUT -d $VALUE ${CONSUL}/${CONSUL_PATH}${KEY}
         fi
         COUNT=$[$COUNT+1]

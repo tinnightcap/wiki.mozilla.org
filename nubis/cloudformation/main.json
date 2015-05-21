@@ -279,6 +279,24 @@
         ]
       }
     },
+    "wgCanonicalServer": {
+      "Description": "Consul: config/ Server url",
+      "Value": {
+        "Fn::Join": [
+          ".",
+          [
+            "https://www",
+            {
+              "Ref": "ServiceName"
+            },
+            {
+              "Ref": "Environment"
+            },
+            "nubis.allizom.org"
+          ]
+        ]
+      }
+    },
     "wgDBserver": {
       "Description": "Consul: config/ Database endpoint",
       "Value": {

@@ -105,6 +105,21 @@
         }
       }
     },
+    "AutoScalingStack": {
+      "Type": "AWS::CloudFormation::Stack",
+      "Properties": {
+        "TemplateURL": "https://s3.amazonaws.com/nubisproject-stacks/master/autoscaling-cpu.template",
+        "TimeoutInMinutes": "60",
+        "Parameters": {
+          "AutoScalingGroup": {
+            "Fn::GetAtt": [
+              "EC2Stack",
+              "Outputs.AutoScalingGroup"
+            ]
+          }
+        }
+      }
+    },
     "ELBStack": {
       "Type": "AWS::CloudFormation::Stack",
       "Properties": {

@@ -22,7 +22,7 @@ class { 'varnish::vcl':
 }
 
 varnish::probe {  'mediawiki_version': 
-  url => '/Special%3AVersion?no-ssl-rewrite',
+  url => '/Special%3AVersion',
   timeout => '15s',
 }
 

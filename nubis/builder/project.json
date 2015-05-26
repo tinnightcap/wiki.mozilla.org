@@ -7,7 +7,7 @@
     ],
     "project_description": "wiki.mozilla.org",
     "project_name": "wiki.mozilla.org",
-    "project_version": "0.7",
+    "project_version": "0.12",
     "source_ami_project_name": "nubis-base"
   }
 }

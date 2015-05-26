@@ -618,7 +618,7 @@ require_once "$IP/extensions/TitleBlacklist/TitleBlacklist.php";
 require_once('/etc/nubis-config/mediawiki.php');
 
 ## The relative URL path to the logo.
-$wgLogo = "$wgStylePath/logos/mozilla-wiki-logo-alt-$Environment-135px.png";
+$wgLogo = "$wgStylePath/logos/mozilla_logo.png";
 
 $wgMemCachedServers = array( "$MemCachedEndpoint:$MemCachedPort" );
 

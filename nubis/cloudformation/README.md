@@ -14,11 +14,6 @@ To update an existing stack:
 aws cloudformation update-stack --stack-name wiki-mozilla-org --template-body file://nubis/cloudformation/main.json --parameters file://nubis/cloudformation/parameters.json
 ```
 
-To delete the stack:
-```bash
-aws cloudformation delete-stack --stack-name wiki-mozilla-org
-```
-
 After creating or updating a stack you might need to update Consul. Run this command to take any (properly described) Cloudformation outputs and insert or update them in Consul:
 ```bash
 nubis-consul --stack-name wiki-mozilla-org --settings nubis/cloudformation/parameters.json get-and-update
@@ -29,6 +24,16 @@ To get the list of nameservers for the HostedZone:
 nubis-consul --stack-name wiki-mozilla-org get-route53-nameservers
 ```
 
+To delete the stack:
+```bash
+aws cloudformation delete-stack --stack-name wiki-mozilla-org
+```
+
+After deleting the stack, be sure to remove the Consul data"
+```bash
+nubis-consul --stack-name nubis-dpaste-twentysix --settings nubis/cloudformation/parameters.json delete
+```
+
 #### Nested Stacks
 
-We are using nested stacks to deploy the necessayr resources. You can find the nested stack templates at [nubis-stacks](https://github.com/Nubisproject/nubis-stacks).
+We are using nested stacks to deploy the necessary resources. You can find the nested stack templates at [nubis-stacks](https://github.com/Nubisproject/nubis-stacks).

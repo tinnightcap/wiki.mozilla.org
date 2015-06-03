@@ -275,7 +275,7 @@
           [
             "//www",
             {
-              "Ref": "ServiceName"
+              "Ref": "AWS::StackName"
             },
             {
               "Ref": "Environment"
@@ -293,7 +293,7 @@
           [
             "https://www",
             {
-              "Ref": "ServiceName"
+              "Ref": "AWS::StackName"
             },
             {
               "Ref": "Environment"

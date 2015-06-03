@@ -163,7 +163,7 @@ while [ ${DONE:-0} -lt '60' ]; do
         fi
         DONE=255
     else
-        echo "Waiting for mount point (sleep 10)"
+        echo "Waiting for mount point (sleep 10) ($DONE of 60)"
         sleep 10
         let DONE=$DONE+1
     fi

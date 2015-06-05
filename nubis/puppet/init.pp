@@ -4,6 +4,7 @@
 #+ manifests
 #
 
+import 'datadog.pp'
 import 'apache.pp'
 import 'fluentd.pp'
 import 'varnish.pp'

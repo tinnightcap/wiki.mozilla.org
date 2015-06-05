@@ -13,6 +13,7 @@ class {
         default_vhost       => false,
         default_confd_files => false,
         mpm_module          => 'prefork';
+    'apache::mod::status':;
     'apache::mod::php':;
     'apache::mod::remoteip':
         proxy_ips => [ '127.0.0.1', '10.0.0.0/8' ];

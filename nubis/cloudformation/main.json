@@ -22,7 +22,7 @@
       "Default": "nubis.allizom.org",
       "Type": "String"
     },
-    "KeyName": {
+    "SSHKeyName": {
       "Description": "Existing ssh key to deploy to EC2 instances",
       "Type": "String"
     },
@@ -55,13 +55,13 @@
   "Mappings": {
     "InstanceTypeMap": {
       "prod": {
-        "InstanceType": "m3.large"
+        "InstanceType": "m3.medium"
       },
       "stage": {
         "InstanceType": "m3.medium"
       },
       "sandbox": {
-        "InstanceType": "m3.large"
+        "InstanceType": "t2.small"
       }
     }
   },
@@ -87,8 +87,8 @@
           "AmiId": {
             "Ref": "AmiId"
           },
-          "KeyName": {
-            "Ref": "KeyName"
+          "SSHKeyName": {
+            "Ref": "SSHKeyName"
           },
           "InstanceType": {
             "Fn::FindInMap": [
@@ -104,7 +104,10 @@
               "ELBStack",
               "Outputs.ELB"
             ]
-          }
+          },
+          "AutoScalingGroupMinSize": "2",
+          "AutoScalingGroupDesiredCapacity": "2",
+          "AutoScalingGroupMaxSize": "6"
         }
       }
     },
@@ -158,7 +161,7 @@
             "Ref": "Environment"
           },
           "AllocatedStorage": "15",
-          "DBInstanceClass": "db.m3.large",
+          "DBInstanceClass": "db.t2.medium",
           "DBName": "mediawiki",
           "EC2SecurityGroup": {
             "Fn::GetAtt": [
@@ -235,8 +238,8 @@
           "Environment": {
             "Ref": "Environment"
           },
-          "KeyName": {
-            "Ref": "KeyName"
+          "SSHKeyName": {
+            "Ref": "SSHKeyName"
           },
           "VolumeSize": {
             "Ref": "StorageVolumeSize"

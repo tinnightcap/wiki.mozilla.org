@@ -46,6 +46,11 @@
       "Description": "The id of the ami for this region",
       "Type": "String"
     },
+    "StacksVersion": {
+      "Description": "Version of the Nubis Stacks",
+      "Type": "String",
+      "Default": "master"
+    },
     "StorageVolumeSize": {
       "Description": "The storage size (in GB) of each member of the storage cluster",
       "Type": "String",

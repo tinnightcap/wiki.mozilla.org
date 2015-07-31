@@ -4,9 +4,6 @@
 # [0] https://github.com/puppetlabs/puppetlabs-apache
 #
 
-$vhost_name = 'www.wiki.sandbox.nubis.allizom.org'
-$install_root = '/var/www/mediawiki'
-
 class {
     'apache':
         default_mods        => true,
@@ -19,10 +16,10 @@ class {
         proxy_ips => [ '127.0.0.1', '10.0.0.0/8' ];
 }
 
-apache::vhost { $::vhost_name:
+apache::vhost { $::project_name:
     port              => '8080',
     default_vhost     => true,
-    docroot           => $::install_root,
+    docroot           => "/var/www/${::project_name}",
     docroot_owner     => 'ubuntu',
     docroot_group     => 'ubuntu',
     block             => ['scm'],

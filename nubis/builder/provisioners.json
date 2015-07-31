@@ -3,21 +3,21 @@
   {
     "type": "file",
     "source": "core/",
-    "destination": "/var/www/mediawiki",
+    "destination": "/var/www/{{user `project_name`}}",
     "order": "11"
   },
   {
     "type": "file",
     "source": "extensions/",
-    "destination": "/var/www/mediawiki/extensions",
+    "destination": "/var/www/{{user `project_name`}}/extensions",
     "order": "12"
   },
   {
     "type": "shell",
     "inline": [
-        "mkdir /var/www/mediawiki/vendor",
-        "mkdir /var/www/mediawiki/skins/logos",
-        "mkdir /var/www/mediawiki/skins/common/fonts"
+        "mkdir /var/www/{{user `project_name`}}/vendor",
+        "mkdir /var/www/{{user `project_name`}}/skins/logos",
+        "mkdir /var/www/{{user `project_name`}}/skins/common/fonts"
      ],
     "order": "13"
   },
@@ -30,53 +30,53 @@
   {
     "type": "file",
     "source": "composer.json",
-    "destination": "/var/www/mediawiki/composer.json",
+    "destination": "/var/www/{{user `project_name`}}/composer.json",
     "order": "14"
   },
   {
     "type": "file",
     "source": "composer.lock",
-    "destination": "/var/www/mediawiki/composer.lock",
+    "destination": "/var/www/{{user `project_name`}}/composer.lock",
     "order": "14"
   },
   {
     "type": "file",
     "source": "nubis/bin/LocalSettings.php",
-    "destination": "/var/www/mediawiki/LocalSettings.php",
+    "destination": "/var/www/{{user `project_name`}}/LocalSettings.php",
     "order": "15"
   },
   {
     "type": "file",
     "source": "assets/fonts/",
-    "destination": "/var/www/mediawiki/skins/common/fonts",
+    "destination": "/var/www/{{user `project_name`}}/skins/common/fonts",
     "order": "16"
   },
   {
     "type": "file",
     "source": "assets/logos/",
-    "destination": "/var/www/mediawiki/skins/logos",
+    "destination": "/var/www/{{user `project_name`}}/skins/logos",
     "order": "18"
   },
   {
     "type": "shell",
     "inline": [
-        "sudo rm -rf /var/www/mediawiki/images",
-        "sudo ln -s /data/wiki.mozilla.org/images /var/www/mediawiki/"
+        "sudo rm -rf /var/www/{{user `project_name`}}/images",
+        "sudo ln -s /data/wiki.mozilla.org/images /var/www/{{user `project_name`}}/"
     ],
     "order": "19"
   },
   {
     "type": "shell",
     "inline": [
-        "sudo ln -s /data/wiki.mozilla.org/charts /var/www/mediawiki/extensions/Bugzilla/charts"
+        "sudo ln -s /data/wiki.mozilla.org/charts /var/www/{{user `project_name`}}/extensions/Bugzilla/charts"
     ],
     "order": "20"
   },
   {
     "type": "shell",
     "inline": [
-        "sudo chown www-data:www-data /var/www/mediawiki",
-        "sudo php /tmp/composer.phar install --working-dir /var/www/mediawiki"
+        "sudo chown www-data:www-data /var/www/{{user `project_name`}}",
+        "sudo php /tmp/composer.phar install --working-dir /var/www/{{user `project_name`}}"
     ],
     "order": "21"
   },

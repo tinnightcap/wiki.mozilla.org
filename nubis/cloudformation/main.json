@@ -1,6 +1,6 @@
 {
   "AWSTemplateFormatVersion": "2010-09-09",
-  "Description": "Demo Mediawiki deployment for the nubis project.",
+  "Description": "Nubis cloudformation stack for wiki.mozilla.org.",
   "Parameters": {
     "ServiceName": {
       "Description": "Name of the service",

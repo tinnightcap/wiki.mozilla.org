@@ -51,13 +51,13 @@ In these examples the stack is called *wiki-mozilla-org*. You will need to choos
 ### Create
 To create a new stack:
 ```bash
-aws cloudformation create-stack --template-body file://nubis/cloudformation/main.json --parameters file://nubis/cloudformation/parameters.json --stack-name wiki-mozilla-org
+aws cloudformation create-stack --template-body file://nubis/cloudformation/main.json --parameters file://nubis/cloudformation/parameters.json --capabilities CAPABILITY_IAM --stack-name wiki-mozilla-org
 ```
 
 ### Update
 To update an existing stack:
 ```bash
-aws cloudformation update-stack --template-body file://nubis/cloudformation/main.json --parameters file://nubis/cloudformation/parameters.json --stack-name wiki-mozilla-org
+aws cloudformation update-stack --template-body file://nubis/cloudformation/main.json --parameters file://nubis/cloudformation/parameters.json --capabilities CAPABILITY_IAM --stack-name wiki-mozilla-org
 ```
 
 ### Update Consul
@@ -87,7 +87,7 @@ aws cloudformation describe-stacks --query 'Stacks[*].Outputs[?OutputKey == `ELB
 ### Delete
 To delete the stack:
 ```bash
-aws cloudformation delete-stack --stack-name wiki-mozilla-org
+aws cloudformation delete-stack --capabilities CAPABILITY_IAM --stack-name wiki-mozilla-org
 ```
 
 After deleting the stack, be sure to remove the Consul data"
